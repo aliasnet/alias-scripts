@@ -14,7 +14,7 @@
 
 (() => {
   // >>>> UPDATE THIS to raw JSON URL
-  const URL = 'https://example.com/fb-matrix-seed.json';
+  const URL = 'https://raw.githubusercontent.com/aliasnet/alias-scripts/refs/heads/main/userscripts/facebook/fb-matrix/fb-matrix-seed.json';
 
   const K_RULES = '__fb_matrix_seed_rules_v1';       // raw JSON text
   const K_ETAG  = '__fb_seed_matrix_rules_etag_v1';  // last seen ETag
