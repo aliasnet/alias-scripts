@@ -2,7 +2,7 @@
 // @name         FB*Matrix
 // @namespace    aliasnet/fb
 // @version      1.0
-// @description  Magick spell (experimental script) for priority adaptation based on keywords with mutation observers; loads rules from storage; refresh by fb-matrix-siphon.user.js
+// @description  Seeding keywords into Facebook's DOM to personalise the feed. This script reads selectors and keywords from local storage and adapts the page accordingly. Rules are fetched by fb-matrix-rules.user.js.
 // @match        https://www.facebook.com/*
 // @match        https://m.facebook.com/*
 // @match        https://touch.facebook.com/*
@@ -21,7 +21,7 @@
     postText: ['[data-ad-preview="message"]','[data-lexical-text]','div[dir="auto"]','[contenteditable="false"]'],
     keywords: ['vacation']          // fallback if no remote rules present
   };
-  const STORE_RULES = '__fb_seed_matrix_rules_v1';
+  const STORE_RULES = '__fb_matrix_rules_json_v1';
 
   let rules = loadRules();
   let detach = initDomLogic(rules);

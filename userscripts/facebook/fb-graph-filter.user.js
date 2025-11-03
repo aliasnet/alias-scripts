@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         FB Graph Filter
-// @namespace    aliasnet
+// @name         FB Graph Matrix
+// @namespace    aliasnet/fb
 // @version      1.0
-// @description  Trigger blocking only while dwell-qualified content is on screen. Two gates: language/script presence and/or keywords. No global English fallback.
+// @description  Adaptive Graph gating for Facebook's Matrix scripts. This script selectively blocks or delays network requests to graph.facebook.com based on dwell, language and keyword heuristics, in concert with fb-matrix.user.js.
 // @match        https://*.facebook.com/*
 // @match        https://m.facebook.com/*
 // @match        https://web.facebook.com/*
