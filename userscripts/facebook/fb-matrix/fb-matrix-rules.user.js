@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         FB Matrix Rules
+// @name         FB Matrix Updater
 // @namespace    aliasnet/fb
 // @version      1.0
 // @description  Periodic fetch of the unified Matrix rules shared across Facebook scripts; stores the JSON for page scripts.
