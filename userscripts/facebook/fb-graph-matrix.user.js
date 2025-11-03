@@ -38,8 +38,12 @@
     const COOLDOWN_MS    = 3000;                  // keep blocking briefly after leaving view
     const INTERSECTION_THRESHOLD = 0.15;          // fraction visible (mobile-friendly)
 
-    // Network scope
-    const BLOCK_HOST = "graph.facebook.com";
+    // Network scope (Graph endpoints + fallbacks)
+    const BLOCK_HOSTS = new Set([
+      "graph.facebook.com",
+      "graph-fallback.facebook.com",
+      "b-graph.facebook.com",
+    ]);
     // Pure-string path filter (no regex). Adjust as needed.
     function pathAllowed(url) {
       const p = url.pathname;
@@ -269,7 +273,7 @@
       if (!blockActive) return false;
       try {
         const url = new URL(u, location.href);
-        if (url.hostname !== BLOCK_HOST || url.port) return false;
+        if (!BLOCK_HOSTS.has(url.hostname) || url.port) return false;
         if (!pathAllowed(url)) return false;
         if (PAYLOAD_TRIPWIRE_ENABLED && !payloadTrip(bodyStr)) return false;
         return true;
