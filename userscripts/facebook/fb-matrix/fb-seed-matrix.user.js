@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         FB*Matrix
+// @name         FB Seed Matrix
 // @namespace    aliasnet/fb
 // @version      1.0
 // @description  Seeding keywords into Facebook's DOM to personalise the feed. This script reads selectors and keywords from local storage and adapts the page accordingly. Rules are fetched by fb-matrix-rules.user.js.
