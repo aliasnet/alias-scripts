@@ -27,7 +27,7 @@
     // Gate B: block by keywords (no regex; Aho–Corasick)
     // Per-script keyword sets. Omit "Latin" to avoid English triggers.
     const KEYWORDS_BY_SCRIPT = {
-      Latin: ["sponsored","advertisement","ad"] 
+      Latin: ["sponsored","advertisement","ad"],
       Han:  ["赞助","广告","贊助","廣告","推荐","推薦","为你推荐","為你推薦"],
     };
     // Global keywords (apply regardless of script). Keep empty unless needed.

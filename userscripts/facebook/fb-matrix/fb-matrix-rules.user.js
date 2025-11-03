@@ -15,7 +15,7 @@
 // ==/UserScript==
 
 (() => {
-  const URL = 'https://raw.githubusercontent.com/aliasnet/alias-scripts/refs/heads/main/userscripts/facebook/fb-matrix/fb-matrix-rules.json';
+  const URL = "https://raw.githubusercontent.com/aliasnet/alias-scripts/refs/heads/main/userscripts/facebook/fb-matrix/fb-matrix-rules.json";
 
   // unified storage keys: use a single prefix so all scripts can read the same cache
   const K_RULES = '__fb_matrix_rules_json_v1';       // raw JSON text
