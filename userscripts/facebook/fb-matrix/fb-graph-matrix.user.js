@@ -2,7 +2,7 @@
 // @name         FB Graph Matrix
 // @namespace    aliasnet/fb
 // @version      1.0
-// @description  Adaptive Graph gating for Facebook's Matrix scripts. This script selectively blocks or delays network requests to graph.facebook.com based on dwell, language and keyword heuristics, in concert with fb-matrix.user.js.
+// @description  Adaptive Graph gating for Facebook's Matrix scripts. This script selectively blocks or delays network requests to graph based on dwell, language and keyword heuristics. 
 // @match        https://*.facebook.com/*
 // @match        https://m.facebook.com/*
 // @match        https://web.facebook.com/*
