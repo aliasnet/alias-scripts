@@ -27,10 +27,59 @@
   const EVERY_HOUR_MS = 60 * 60 * 1000;
   const jitter = () => (55 + Math.floor(Math.random() * 10)) * 60 * 1000;
 
-  const valid = (o) => {
-    const arr = v => Array.isArray(v) && v.every(x => typeof x === 'string');
-    return !!o && arr(o.feed) && arr(o.post) && arr(o.postText) && (!o.keywords || arr(o.keywords));
-  };
+  const arr = (v) => Array.isArray(v) && v.every(x => typeof x === 'string');
+  const isPlainObject = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
+
+  const validHostEntry = (entry) => (
+    isPlainObject(entry)
+    && arr(entry.feed)
+    && arr(entry.post)
+    && arr(entry.postText)
+    && (!('keywords' in entry) || arr(entry.keywords))
+  );
+
+  const validHosts = (hosts) => (
+    isPlainObject(hosts)
+    && Object.values(hosts).every(validHostEntry)
+  );
+
+  const validKeywordsByScript = (value) => (
+    isPlainObject(value)
+    && Object.values(value).every(arr)
+  );
+
+  const validHotkey = (value) => (
+    isPlainObject(value)
+    && typeof value.code === 'string'
+    && typeof value.altKey === 'boolean'
+  );
+
+  const isFiniteNumber = (n) => typeof n === 'number' && Number.isFinite(n);
+
+  const validGraph = (graph) => (
+    isPlainObject(graph)
+    && typeof graph.languageBlockEnabled === 'boolean'
+    && arr(graph.languageBlock)
+    && validKeywordsByScript(graph.keywordsByScript)
+    && arr(graph.keywordsGlobal)
+    && isFiniteNumber(graph.minTextLength)
+    && isFiniteNumber(graph.maxTextLength)
+    && isFiniteNumber(graph.minDwellMs)
+    && isFiniteNumber(graph.cooldownMs)
+    && isFiniteNumber(graph.intersectionThreshold)
+    && typeof graph.payloadTripwireEnabled === 'boolean'
+    && arr(graph.payloadNeedles)
+    && arr(graph.blockHosts)
+    && typeof graph.debug === 'boolean'
+    && typeof graph.uiBadge === 'boolean'
+    && validHotkey(graph.hotkey)
+  );
+
+  const valid = (obj) => (
+    isPlainObject(obj)
+    && validHosts(obj.hosts)
+    && (!('graph' in obj) || validGraph(obj.graph))
+  );
 
   function refresh() {
     const etag = GM_getValue(K_ETAG, null);
@@ -70,7 +119,7 @@
     });
   }
 
-  // Helper your page scripts can call to read cached rules
+  // Helper your page scripts can call to read cached rules (hosts + graph)
   // Example usage in another userscript: const rules = unsafeWindow.fbMatrixGetRules();
   function getRules() {
     try {
@@ -83,8 +132,16 @@
     }
   }
 
+  function getGraphRules() {
+    const rules = getRules();
+    return rules && typeof rules === 'object' ? (rules.graph || null) : null;
+  }
+
   // Expose helper (ScriptCat/Tampermonkey-compatible)
-  try { window.fbMatrixGetRules = getRules; } catch (e) { /* no-op */ }
+  try {
+    window.fbMatrixGetRules = getRules;
+    window.fbMatrixGetGraphRules = getGraphRules;
+  } catch (e) { /* no-op */ }
 
   // Kick off now + repeat hourly with jitter
   refresh();
