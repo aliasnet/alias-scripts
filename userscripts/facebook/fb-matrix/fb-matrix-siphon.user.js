@@ -1,9 +1,11 @@
 // ==UserScript==
-// @name         FB*Matrix Siphon
+// @name         FB Matrix Rules
 // @namespace    aliasnet/fb
 // @version      1.0
-// @description  Hourly fetch of shared keyword seeding rules; stores for page scripts
-// @match        *://*/*
+// @description  Periodic fetch of the unified Matrix rules shared across Facebook scripts; stores the JSON for page scripts.
+// @match        https://*.facebook.com/*
+// @match        https://m.facebook.com/*
+// @match        https://touch.facebook.com/*
 // @run-at       document-start
 // @grant        GM_xmlhttpRequest
 // @grant        GM_getValue
@@ -14,11 +16,12 @@
 
 (() => {
   // >>>> UPDATE THIS to raw JSON URL
-  const URL = 'https://raw.githubusercontent.com/aliasnet/alias-scripts/refs/heads/main/userscripts/facebook/fb-matrix/fb-matrix-seed.json';
+  const URL = 'https://raw.githubusercontent.com/aliasnet/alias-scripts/refs/heads/main/userscripts/facebook/fb-matrix/fb-matrix-rules.json';
 
-  const K_RULES = '__fb_matrix_seed_rules_v1';       // raw JSON text
-  const K_ETAG  = '__fb_seed_matrix_rules_etag_v1';  // last seen ETag
-  const K_TS    = '__fb_matrix_seed_rules_ts_v1';    // last fetch timestamp (ms)
+  // unified storage keys: use a single prefix so all scripts can read the same cache
+  const K_RULES = '__fb_matrix_rules_json_v1';       // raw JSON text
+  const K_ETAG  = '__fb_matrix_rules_etag_v1';       // last seen ETag
+  const K_TS    = '__fb_matrix_rules_ts_v1';         // last fetch timestamp (ms)
 
   // 55–65 min jitter to avoid thundering herd
   const EVERY_HOUR_MS = 60 * 60 * 1000;
@@ -68,7 +71,7 @@
   }
 
   // Helper your page scripts can call to read cached rules
-  // Example usage in another userscript: const rules = unsafeWindow.fbfeederGetRules();
+  // Example usage in another userscript: const rules = unsafeWindow.fbMatrixGetRules();
   function getRules() {
     try {
       const txt = GM_getValue(K_RULES, null);
@@ -81,7 +84,7 @@
   }
 
   // Expose helper (ScriptCat/Tampermonkey-compatible)
-try { window.fbfeederGetRules = getRules; } catch (e) { /* no-op */ }
+  try { window.fbMatrixGetRules = getRules; } catch (e) { /* no-op */ }
 
   // Kick off now + repeat hourly with jitter
   refresh();
