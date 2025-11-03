@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "2025.10.29",
-  "updatedAt": "2025-10-29T10:00:00Z",
+  "version": "2025.11.04",
+  "updatedAt": "2025-11-04T10:00:00Z",
   "ttlSeconds": 86400,
   "hosts": {
     "default": {
@@ -61,6 +61,59 @@
         "div[dir=\"auto\"]",
         "[data-lexical-text]"
       ]
+    }
+  },
+  "graph": {
+    "languageBlockEnabled": false,
+    "languageBlock": [
+      "Han",
+      "Thai"
+    ],
+    "minTextLength": 40,
+    "maxTextLength": 40000,
+    "keywordsByScript": {
+      "Latin": [
+        "sponsored",
+        "advertisement",
+        "ad"
+      ],
+      "Han": [
+        "赞助",
+        "广告",
+        "贊助",
+        "廣告",
+        "推荐",
+        "推薦",
+        "为你推荐",
+        "為你推薦"
+      ]
+    },
+    "keywordsGlobal": [],
+    "minDwellMs": 2500,
+    "cooldownMs": 3000,
+    "intersectionThreshold": 0.15,
+    "payloadTripwireEnabled": false,
+    "payloadNeedles": [
+      "dwell",
+      "impression",
+      "viewport",
+      "logging",
+      "exposure",
+      "scroll",
+      "view_time",
+      "duration",
+      "watch_time"
+    ],
+    "blockHosts": [
+      "graph.facebook.com",
+      "graph-fallback.facebook.com",
+      "b-graph.facebook.com"
+    ],
+    "debug": false,
+    "uiBadge": true,
+    "hotkey": {
+      "altKey": true,
+      "code": "KeyB"
     }
   }
 }
